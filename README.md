@@ -1,281 +1,213 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; background:#fff; color:#333;}
+    header {background:#111; color:#fff; padding:20px; text-align:center;}
+    nav {display:flex; justify-content:center; background:#333; flex-wrap:wrap;}
+    nav a, nav button {color:#fff; text-decoration:none; padding:14px 20px; font-size:16px; border:none; background:none; cursor:pointer;}
+    nav a:hover, nav button:hover {background:#555;}
+    section {padding:60px 20px;}
+    h2 {margin-top:0; text-align:center;}
+    html {scroll-behavior:smooth;}
+    /* Hero */
+    #home {display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    #home .intro {flex:1; padding:20px;}
+    #home img {flex:1; max-width:400px; border-radius:10px;}
+    /* Services cards */
+    .services {display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px;}
+    .service-card {padding:20px; border:1px solid #ddd; border-radius:8px; text-align:center; background:#f9f9f9;}
+    /* Gallery */
+    .gallery {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
+    .gallery-item {flex:1; min-width:250px; text-align:center;}
+    .gallery-item img {max-width:100%; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2);}
+    /* Contact form */
+    form {max-width:500px; margin:auto; display:flex; flex-direction:column;}
+    form input, form textarea {margin:10px 0; padding:10px; font-size:14px; border:1px solid #ccc; border-radius:4px;}
+    form button {padding:12px; background:#333; color:#fff; border:none; cursor:pointer; font-size:16px;}
+    form button:hover {background:#555;}
+    /* Stats */
+    .stats {display:flex; justify-content:center; gap:40px; flex-wrap:wrap; text-align:center;}
+    .stat {font-size:20px; font-weight:bold;}
+ 
+    #chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+#chatbot.minimized {
+    height: 40px;
+    width: 150px;
+    overflow: hidden;
+}
 
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
+#chat-window {
+    height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+}
 
-        
-        nav {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 20px 8%;
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+#chat-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #2d2d2d;
+    color: white;
+}
 
-        nav a {
-            margin-left: 30px;
-            text-decoration: none;
-            color: #444;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #6366f1;
-        }
-
-    
-        header.hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            color: white;
-            text-align: center;
-            padding-top: 60px;
-        }
-
-        .profile-pic {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 6px solid rgba(255, 255, 255, 0.3);
-            object-fit: cover;
-            margin-bottom: 20px;
-        }
-
-        
-        section {
-            padding: 100px 10%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            color: #1f2937;
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 4px;
-            background: #6366f1;
-            bottom: -10px;
-            left: 0;
-            border-radius: 2px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        
-        .contact-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .contact-table td {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .label-cell {
-            background-color: #f3f4f6;
-            font-weight: 600;
-            width: 30%;
-            color: #4b5563;
-        }
-
-        input[type="text"], 
-        input[type="email"], 
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            outline: none;
-            transition: border 0.3s;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #6366f1;
-        }
-
-        .submit-btn {
-            background: #6366f1;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: #4f46e5;
-        }
-
-        footer {
-            background: #1f2937;
-            color: #9ca3af;
-            text-align: center;
-            padding: 50px 20px;
-        }
-    </style>
+  </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#tutorials">Tutorials</a>
-        <a href="#contact">Contact</a>
-    </nav>
+<header>
+  <h1>My Portfolio</h1>
+  <p>Showcasing my skills, projects, and achievements</p>
+</header>
 
-    <header class="hero">
-        <img src="/FB_IMG_17160401108825296.jpg " alt="Profile Picture" class="profile-pic">
-        <h1>JERO ESTEBAN</h1>
-        <p>I.T STUDENT</p>
-    </header>
+<nav>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#certificates">Certificates</a>
+  <a href="#contact">Contact</a>
+  <button onclick="downloadCV()">Download CV</button>
+</nav>
 
-    <section id="about">
- <h2>About Me</h2>
-        <p>I am a creative developer passionate about building clean, functional, and user-friendly websites. I enjoy learning new technologies and sharing my knowledge through tutorials.</p>
-    </section>
+<!-- Hero -->
+<section id="home">
+  <div class="intro">
+    <h1>Hello, I’m Jero Esteban</h1>
+    <p>A Second Year College Student of Central Philippines State University-Moises Padilla Campus.Taking up the Bachelor of Science in Information Technology.</p>
+  </div>
+  <img src="/Messenger_creation_D7004EDB-C243-4CE4-A2F5-599EBDA34F21.jpeg" alt="My Portrait">
+</section>
 
-    <section id="skills">
-        <h2>My Skills</h2>
-        <div class="grid">
-            <div class="card"><h3>Design</h3><p>UI/UX Design, Figma, Canva.</p></div>
-            <div class="card"><h3>Development</h3><p>HTML5, CSS3, JavaScript.</p></div>
-            <div class="card"><h3>Other</h3><p>Video Editing, SEO Optimization.</p></div>
-        </div>
-    </section>
 
-    <section id="tutorials">
-        <h2>Video Tutorials</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <h3>Tutorial #1</h3>
-                <p>Getting started with the basics.</p>
-            </div>
-            <div class="card">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <h3>Tutorial #2</h3>
-                <p>Mastering the design phase.</p>
-            </div>
-            <div class="card">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <h3>Tutorial #3</h3>
-                <p>Advanced tips and tricks.</p>
-            </div>
-        </div>
-    </section>
+<section id="about">
+  <h1>About Me</h1>
+  <p>I am a passionate developer and designer, focused on creating modern, user-friendly digital experiences.</p>
+  <div class="stats">
+    <div class="stat">2+ Years</div>
+    <div class="stat">10+ Projects</div>
+    <div class="stat">10+ Certificates</div>
+  </div>
+</section>
 
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <p style="margin-bottom: 20px;">Have a question? Fill out the form below and I'll get back to you!</p>
+
+<section id="skills">
+  <h1>Skills</h1>
+  <ul>
+    <li>Web Development (HTML, CSS, JavaScript)</li>
+    <li>UI/UX Design</li>
+    <li>WordPress Customization</li>
+    <li>Graphic Design (Canva, Photoshop)</li>
+  </ul>
+</section>
+
+<section id="projects">
+  <h1>Projects</h1>
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="/Messenger_creation_F171150B-9DBD-4A25-8C2A-08BFB811119A.jpeg" alt="Certificate 1">
+      <p>Artificial Intelligence</p>
+    </div>
+    <div class="gallery-item">
+      <img src="/Messenger_creation_88DDEBB8-06A8-48FE-8C49-A1B9B34FF890.jpeg" alt="Certificate 2">
+      <p>IT SEMINAR</p>
+    </div>
+
+<section id="certificates">
+  <h1>Certificates</h1>
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="/Messenger_creation_59EECDCE-C501-405F-9190-65829671D23C.jpeg" alt="Certificate 1">
+      <p>Cisco Networking Fundamentals</p>
+    </div>
+    <div class="gallery-item">
+      <img src="/Messenger_creation_B7E4A3F8-C60C-4A9E-8110-1ADACE32B8AF.jpeg" alt="Certificate 2">
+      <p>IT SEMINAR</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <h1>Contact</h1>
+  <p>Reach out to me directly using the form below:</p>
+  <form action="mailto:yourname@example.com" method="post" enctype="text/plain">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<div id="chatbot">
+    <div onclick="toggleChat()" style="background: #333; padding: 10px; cursor: pointer; border-radius: 10px 10px 0 0;">
+        <span>🤖 Portfolio AI</span>
+    </div>
+    <div id="chat-window"></div>
+    <input id="chat-input" type="text" placeholder="Ask me about my portfolio...">
+</div>
+
+
+<script>
+  function downloadCV() {
+    const link = document.createElement('a');
+    link.href = 'https://sg.docworkspace.com/d/sbCaie7EbDP9VEam_iz85afwpa7cxibg96n?sa=601.1245';
+    link.download = 'My_CV.pdf';
+    link.click();
+  }
+
+  const chatWindow = document.getElementById('chat-window');
+  const chatInput = document.getElementById('chat-input');
+
+  chatInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter' && chatInput.value.trim() !== "") {
+        const userMessage = chatInput.value;
         
-        <form action="#">
-            <table class="contact-table">
-                <tr>
-                    <td class="label-cell">Full Name</td>
-                    <td><input type="text" placeholder="Your Name" required></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Email Address</td>
-                    <td><input type="email" placeholder="email@example.com" required></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Message</td>
-                    <td><textarea rows="5" placeholder="How can I help you?" required></textarea></td>
-                </tr>
-                <tr>
-                    <td class="label-cell"></td>
-                    <td><button type="submit" class="submit-btn">Send Message</button></td>
-                </tr>
-            </table>
-        </form>
-    </section>
+        
+        appendMessage('User', userMessage);
+        chatInput.value = ''; 
 
-    <footer>
-        <p>&copy; 2026 Esteban, Jero Portfolio.</p>
-    </footer>
+        
+        setTimeout(() => {
+            const botResponse = getBotResponse(userMessage);
+            appendMessage('AI', botResponse);
+        }, 600);
+    }
+});
 
-</body>
-</html>
+function appendMessage(sender, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+    msgDiv.style.margin = "5px 0";
+    chatWindow.appendChild(msgDiv);
+    chatWindow.scrollTop = chatWindow.scrollHeight; 
+}
+
+function getBotResponse(input) {
+    const query = input.toLowerCase();
+    if (query.includes("skills")) return "I am proficient in HTML, CSS, JS, and React!";
+    if (query.includes("contact")) return "You can reach me via the contact form above.";
+    if (query.includes("projects")) return "Check out my 'Work' section for my latest projects!";
+    return "That's a great question! I'm still learning, but feel free to browse my resume.";
+}
+
+
+function toggleChat() {
+    const bot = document.getElementById('chatbot');
+    bot.classList.toggle('minimized');
+}
